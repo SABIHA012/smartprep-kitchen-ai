@@ -32,7 +32,7 @@ function Planner() {
         <div className="grid gap-6 md:grid-cols-[1fr_auto] md:items-end">
           <div>
             <div className="mb-3 flex items-baseline justify-between"><p className="text-sm font-semibold">Safety buffer</p><p className="font-display text-3xl text-primary">{buffer}%</p></div>
-            <Slider value={[buffer]} max={50} step={1} onValueChange={([v]) => setBuffer(v)} />
+            <Slider value={[buffer]} max={50} step={1} onValueChange={([v]) => setBuffer(v ?? 0)} />
             <div className="mt-3 flex flex-wrap gap-2">
               {[0, 5, 10, 15, 20].map((b) => <Button key={b} size="sm" variant={b === buffer ? "default" : "outline"} onClick={() => setBuffer(b)}>{b}%</Button>)}
             </div>

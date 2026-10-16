@@ -11,6 +11,6 @@ describe("SmartPrep rules", () => {
     expect(generateDataset()).toHaveLength(720);
   });
   it("never uses simulated or target columns as inputs", () => {
-    for (const c of FEATURE_COLUMNS) expect(c.startsWith("sim_") || c === "orders").toBe(false);
+    for (const c of FEATURE_COLUMNS) expect(c.startsWith("sim_") || (c as string) === "orders").toBe(false);
   });
 });

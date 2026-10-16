@@ -26,7 +26,7 @@ const mean = (a: number[]) => (a.length ? a.reduce((s, v) => s + v, 0) / a.lengt
  * It uses historical average Orders per meal×centre and multiplies by uplift ratios
  * observed in the data for promotions, special events and price. Uses feature columns only.
  */
-export function buildDemoModel(data: OrderRecord[]): DemandModel & { factors: Record<string, number> } {
+export function buildDemoModel(data: OrderRecord[]): DemandModel & { factors: { promotion: number; special_event: number; elasticity: number } } {
   const base = new Map<string, number[]>();
   const basePrice = new Map<number, number>();
   for (const r of data) {

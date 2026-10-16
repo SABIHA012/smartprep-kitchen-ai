@@ -62,7 +62,7 @@ function Forecast() {
               </Select>
             </Field>
             <Field label={`Week (data covers 1–${maxWeek})`}><Input type="number" min={1} value={week} onChange={(e) => setWeek(Math.max(1, Number(e.target.value) || 1))} /></Field>
-            <Field label={`Discount: ${discount}%`}><Slider value={[discount]} max={50} step={5} onValueChange={([v]) => changeDiscount(v)} /></Field>
+            <Field label={`Discount: ${discount}%`}><Slider value={[discount]} max={50} step={5} onValueChange={([v]) => changeDiscount(v ?? 0)} /></Field>
             <Field label={`Selling price (base ₹${meal?.base_price})`}><Input type="number" min={1} value={price} onChange={(e) => setPrice(Math.max(1, Number(e.target.value) || 1))} /></Field>
             <div className="flex items-center justify-between rounded-lg bg-muted p-3"><Label htmlFor="promo">Promotion running</Label><Switch id="promo" checked={promo} onCheckedChange={setPromo} /></div>
             <div className="flex items-center justify-between rounded-lg bg-muted p-3"><Label htmlFor="event">Special event</Label><Switch id="event" checked={event} onCheckedChange={setEvent} /></div>

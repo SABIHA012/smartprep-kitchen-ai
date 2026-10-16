@@ -57,5 +57,5 @@ export function buildDemoModel(data: OrderRecord[]): DemandModel & { factors: Re
 
 /** Recommended preparation units = predicted demand plus safety buffer, rounded up. */
 export function recommendedPrep(predicted: number, bufferPct: number): number {
-  return Math.ceil(predicted * (1 + Math.max(0, bufferPct) / 100));
+  return Math.ceil(Math.round(predicted * (100 + Math.max(0, bufferPct)) * 1e6) / 1e8);
 }

@@ -72,7 +72,7 @@ export function generateDataset(): OrderRecord[] {
     for (const c of CENTRES) {
       for (const m of MEALS) {
         const promotion = rand() < 0.25 ? 1 : 0;
-        const discount = promotion ? [10, 15, 20, 25][Math.floor(rand() * 4)] : rand() < 0.15 ? 5 : 0;
+        const discount = promotion ? [10, 15, 20, 25][Math.floor(rand() * 4)]! : rand() < 0.15 ? 5 : 0;
         const price = Math.round(m.basePrice * (1 - discount / 100));
         const seasonal = 1 + 0.08 * Math.sin((week / WEEKS) * Math.PI * 2);
         const noise = 0.82 + rand() * 0.36;
@@ -120,12 +120,12 @@ export function parseCSV(text: string): { headers: string[]; rows: string[][] } 
   }
   row.push(field);
   if (row.some((f) => f.trim() !== "")) out.push(row);
-  const [headers = [], ...rows] = out;
+  const headers = out[0] ?? []; const rows = out.slice(1);
   return { headers: headers.map((h) => h.trim()), rows };
 }
 
 export function toCSV(rows: OrderRecord[]): string {
-  const headers = Object.keys(rows[0]) as (keyof OrderRecord)[];
+  const headers = Object.keys(rows[0]!) as (keyof OrderRecord)[];
   return [headers.join(","), ...rows.map((r) => headers.map((h) => {
     const v = String(r[h]); return v.includes(",") ? `"${v}"` : v;
   }).join(","))].join("\n");
@@ -136,7 +136,7 @@ export function recordsFromCSV(headers: string[], rows: string[][]): OrderRecord
   const idx = (k: string) => headers.indexOf(k);
   if (!REQUIRED_COLUMNS.every((k) => idx(k) >= 0)) return null;
   const num = (r: string[], k: string) => (idx(k) >= 0 ? Number(r[idx(k)]) || 0 : 0);
-  const str = (r: string[], k: string, fb: string) => (idx(k) >= 0 && r[idx(k)] ? r[idx(k)] : fb);
+  const str = (r: string[], k: string, fb: string) => (idx(k) >= 0 && r[idx(k)] ? r[idx(k)]! : fb);
   return rows.map((r, i) => {
     const orders = num(r, "orders");
     const prepared = num(r, "sim_prepared");

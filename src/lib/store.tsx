@@ -49,7 +49,7 @@ export function buildPlan(data: OrderRecord[], model: Ctx["model"], buffer: numb
   }
   return [...groups.values()].map((rows) => {
     rows.sort((a, b) => a.week - b.week);
-    const last = rows[rows.length - 1];
+    const last = rows[rows.length - 1]!;
     const o = rows.map((r) => r.orders);
     const avg = o.reduce((s, v) => s + v, 0) / o.length;
     const sd = Math.sqrt(o.reduce((s, v) => s + (v - avg) ** 2, 0) / o.length);
